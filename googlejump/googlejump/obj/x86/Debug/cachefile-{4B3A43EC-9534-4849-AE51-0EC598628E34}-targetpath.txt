@@ -28,3 +28,4 @@ Content\break_sound.xnb
 Content\game_over_sound.xnb
 Content\jump_pad_sound.xnb
 Content\spring_sound.xnb
+Content\moving_monster.xnb

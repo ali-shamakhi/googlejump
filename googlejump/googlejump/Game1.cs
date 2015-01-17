@@ -21,17 +21,17 @@ namespace googlejump
         public static int i;
 
         // game properties
-        public const bool test = true;
-        public static int screen_width;
-        public static int screen_height;
-        public static bool gameOver = false;
-        public static bool paused = false;
-        public static bool fallen = false;
-        public static bool menu = true;
-        public static bool options = false;
-        public static bool set_sound = true;
-        public static float level_height;
-        public static float height_per_score;
+        public const bool test = false; // for testing
+        public static int screen_width;     // value at Initialize()
+        public static int screen_height;    // value at Initialize()
+        public static bool gameOver = false;    //  if game is running
+        public static bool paused = false;  // if paused
+        public static bool fallen = false;  // if doodle is fallen behind screen
+        public static bool menu = true;     // if in menu
+        public static bool options = false; // if in options
+        public static bool set_sound = true;    // if sound on
+        public static float level_height;   // the current height of game level, also used as score
+        public static float height_per_score;     // value at Initialize()
         public static Vector2 acceleration = new Vector2(0, -0.4f);
         public static Vector2 platform_size = new Vector2(80.0f, 20.0f);
         public static Vector2 normal_monster_size = new Vector2(60.0f, 60.0f);
@@ -45,9 +45,9 @@ namespace googlejump
         public static float doodle_max_move_speed = 12.0f;
         public static float doodle_max_ascend_speed = doodle_normal_jump_speed;
         public static float doodle_max_ascend_height = (doodle_normal_jump_speed * doodle_normal_jump_speed) / (2 * absolute(acceleration.Y));
-        public static float doodle_max_distance_from_below = doodle_max_ascend_height +  platform_size.Y + 5;
-        public static float doodle_move_acceleration = 1.2f;
-        public static Vector2 trunk_size = new Vector2(24.0f,12.0f);
+        public static float doodle_max_distance_from_below = doodle_max_ascend_height + platform_size.Y + 5;   // the max height in screen that doodle can reach
+        public static float doodle_move_acceleration = 1.2f;    // horizontal
+        public static Vector2 trunk_size = new Vector2(24.0f, 12.0f);
         public static Vector2 eyes_size = new Vector2(12.0f, 5.0f);
         public static KeyboardState keyboard_state;
         public static MouseState mouse_state;
@@ -56,14 +56,14 @@ namespace googlejump
         public static Texture2D options_texture;
         public static Texture2D game_over_texture;
         public static Texture2D pause_texture;
-        public static Texture2D platform_breakable_left_texture;
-        public static Texture2D platform_breakable_right_texture;
+        public static Texture2D platform_breakable_left_texture;    // not used yet
+        public static Texture2D platform_breakable_right_texture;   // not used yet
         public static Texture2D ball_texture;
         public static Texture2D huge_monster_texture;
         public static Texture2D normal_monster_texture;
         public static Texture2D moving_monster_texture;
-        public static Texture2D jump_pad_texture;
-        public static Texture2D spring_texture;
+        public static Texture2D jump_pad_texture;   // not used yet
+        public static Texture2D spring_texture;     // not used yet
         public static Texture2D doodle_texture;
         public static Texture2D trunk_texture;
         public static Texture2D eyes_texture;
@@ -72,10 +72,11 @@ namespace googlejump
         public static Texture2D block_layer;
         public static Texture2D crosshair_texture;
         public static Texture2D tick_texture;
-        public static SpriteFont drawing_font_title;
+        public static SpriteFont drawing_font_title;    // not used yet
         public static SpriteFont drawing_font_text;
         // randomizer
         public static Random rnd = new Random();
+        // wrapped random
         public static int rand(int start, int end)
         {
             if (start == end)
@@ -84,30 +85,30 @@ namespace googlejump
                 return (rnd.Next(start, end) * rnd.Next(start, end) * rnd.Next(start, end) + rnd.Next(start, end)) % (end - start) + start;
         }
         // probability
-        public const int prb_container = 1000;
+        public const int prb_container = 1000;  // stack
         public static float prb_platform_breakable;
         public const float max_prb_platform_breakable = 400;
-        public static float prb_per_height_platform_breakable;
+        public static float prb_per_height_platform_breakable;  // increment amount
         public static float prb_platform_one_jump;
         public const float max_prb_platform_one_jump = 200;
-        public static float prb_per_height_platform_one_jump;
+        public static float prb_per_height_platform_one_jump;   // increment amount
         public static float prb_platform_moving;
         public const float max_prb_platform_moving = 200;
-        public static float prb_per_height_platform_moving;
+        public static float prb_per_height_platform_moving; // increment amount
 
         public static float prb_monster_normal;
         public const float max_prb_monster_normal = 25;
-        public static float prb_per_height_monster_normal;
+        public static float prb_per_height_monster_normal;  // increment amount
         public static float prb_monster_moving;
         public const float max_prb_monster_moving = 25;
-        public static float prb_per_height_monster_moving;
+        public static float prb_per_height_monster_moving;  // increment amount
         public static float prb_monster_huge;
         public const float max_prb_monster_huge = 10;
-        public static float prb_per_height_monster_huge;
+        public static float prb_per_height_monster_huge;    // increment amount
 
-        public static float min_space_platforms;
-        public static float max_space_platforms;
-        public static float spc_per_height_platforms;
+        public static float min_space_platforms;    // min space between two sequential platforms
+        public static float max_space_platforms;    // max space between two sequential platforms
+        public static float spc_per_height_platforms;   // increment amount
 
         public static float limit_platform_breakable()
         {
@@ -141,18 +142,18 @@ namespace googlejump
         public static SoundEffect ball_sound;
         public static SoundEffect spring_sound;
         public static SoundEffect break_sound;
-        public static SoundEffectInstance s_bounce;
+        public static SoundEffectInstance s_bounce;     // when jumped
         public static SoundEffectInstance s_jump_pad;
-        public static SoundEffectInstance s_game_over;
-        public static SoundEffectInstance s_ball;
+        public static SoundEffectInstance s_game_over;  // when fell
+        public static SoundEffectInstance s_ball;       // when shoot
         public static SoundEffectInstance s_spring;
-        public static SoundEffectInstance s_break;
+        public static SoundEffectInstance s_break;      // when break platform
         // types
         public enum platform_type { NORMAL = 0, BREAKABLE = 1, ONE_JUMP = 2, MOVING = 3, BURNING = 4 };
         public enum enemy_type { NORMAL = 0, MOVING = 1, HUGE = 2, NONE = 3 };
         public enum powerup_type { SPRING = 0, SPRING_SHOE = 1, JUMP_PAD = 2, ROCKET = 3 };
 
-        // cartesian y
+        // cartesian y ; for drawings
         public static float cart_y(float y)
         {
             return (float)screen_height - y;
@@ -162,11 +163,13 @@ namespace googlejump
         {
             return ((n < 0) ? -n : n);
         }
+        // the y factor of a vector with given size and direction
         public static float vector_y(float size, Vector2 vect)
         {
             float vect_size = (float)Math.Sqrt(vect.X * vect.X + vect.Y * vect.Y);
             return vect.Y * (size / vect_size);
         }
+        // the x factor of a vector with given size and direction
         public static float vector_x(float size, Vector2 vect)
         {
             float vect_size = (float)Math.Sqrt(vect.X * vect.X + vect.Y * vect.Y);
@@ -288,7 +291,7 @@ namespace googlejump
 
                 new_enemy.health = 1;
                 if (new_enemy.type == enemy_type.HUGE)
-                    new_enemy.health = 3;
+                    new_enemy.health = 2;
 
                 if (new_enemy.type == enemy_type.MOVING)
                     new_enemy.moving_right = (rnd.Next(2) == 1 ? true : false);
@@ -316,19 +319,19 @@ namespace googlejump
 
                 new_enemy.health = 1;
                 if (new_enemy.type == enemy_type.HUGE)
-                    new_enemy.health = 3;
+                    new_enemy.health = 2;
 
                 if (new_enemy.type == enemy_type.MOVING)
                     new_enemy.moving_right = (rnd.Next(2) == 1 ? true : false);
 
                 Vector2 size = (new_enemy.type == enemy_type.NORMAL ? normal_monster_size :
                     (new_enemy.type == enemy_type.MOVING ? moving_monster_size :
-                    (new_enemy.type == enemy_type.HUGE ? huge_monster_size : new Vector2(0,0))));
+                    (new_enemy.type == enemy_type.HUGE ? huge_monster_size : new Vector2(0, 0))));
                 new_enemy.size = size;
 
                 new_enemy.origin.X = rnd.Next((int)(size.X / 2), screen_width - (int)(size.X / 2) + 1);
-                new_enemy.origin.Y = plt[plt.Count-1].origin.Y + platform_size.Y + 10;
-                
+                new_enemy.origin.Y = plt[plt.Count - 1].origin.Y + platform_size.Y + 10;
+
                 enm.Add(new_enemy);
             }
         }
@@ -338,7 +341,7 @@ namespace googlejump
             if (trunk.heat <= 0 && !game_stats.just_played)
             {
                 float shoot_origin_y = (doodle.origin.Y - level_height) + doodle.size.Y - 10;
-                Vector2 direction = new Vector2(crosshair.origin.X - doodle.origin.X , crosshair.origin.Y - shoot_origin_y);
+                Vector2 direction = new Vector2(crosshair.origin.X - doodle.origin.X, crosshair.origin.Y - shoot_origin_y);
                 new_ball = new bll();
                 new_ball.origin.X = doodle.origin.X + vector_x(30, direction);
                 new_ball.origin.Y = shoot_origin_y + vector_y(30, direction) + level_height;
@@ -355,14 +358,14 @@ namespace googlejump
             }
 
         }
-        public static void destroy(ref List<pltfrm> plt, ref List<bll> bal,ref List<enmy> enm, bool all)
+        public static void destroy(ref List<pltfrm> plt, ref List<bll> bal, ref List<enmy> enm, bool all)
         {
             if (all)
             {
                 for (i = 0; i < plt.Count; i++)
                 {
-                     plt.RemoveAt(i);
-                     i--;
+                    plt.RemoveAt(i);
+                    i--;
                 }
                 for (i = 0; i < bal.Count; i++)
                 {
@@ -387,7 +390,7 @@ namespace googlejump
                 }
                 for (i = 0; i < bal.Count; i++)
                 {
-                    if (bal[i].origin.Y + ball_size.Y/2 < level_height || bal[i].origin.X + ball_size.X/2 < 0 || bal[i].origin.X - ball_size.X/2 > screen_width )
+                    if (bal[i].origin.Y + ball_size.Y / 2 < level_height || bal[i].origin.X + ball_size.X / 2 < 0 || bal[i].origin.X - ball_size.X / 2 > screen_width)
                     {
                         bal.RemoveAt(i);
                         i--;
@@ -493,7 +496,7 @@ namespace googlejump
             public void draw(SpriteBatch spr)
             {
                 if (in_screen())
-                    spr.Draw(crosshair_texture, drawing_boundary() , Color.White);
+                    spr.Draw(crosshair_texture, drawing_boundary(), Color.White);
             }
         }
 
@@ -518,9 +521,9 @@ namespace googlejump
 
                 if (!freezed)
                 {
-                    
+
                     origin.X += (absolute(velocity.X) < doodle_max_move_speed ? velocity.X : doodle_max_move_speed * (velocity.X / absolute(velocity.X)));
-                    
+
                     // check speed limits
                     if (absolute(velocity.X) < doodle_max_move_speed || velocity.X * acceleration.X < 0.0f)
                         velocity.X += acceleration.X;
@@ -577,7 +580,7 @@ namespace googlejump
             }
             public void draw(SpriteBatch spr)
             {
-                spr.Draw(doodle_texture, drawing_boundary(), null, Color.White,0,new Vector2(0,0),(moving_right ? SpriteEffects.None : SpriteEffects.FlipHorizontally ),0);
+                spr.Draw(doodle_texture, drawing_boundary(), null, Color.White, 0, new Vector2(0, 0), (moving_right ? SpriteEffects.None : SpriteEffects.FlipHorizontally), 0);
             }
         }
         // trunk
@@ -594,9 +597,9 @@ namespace googlejump
             }
             public void draw(SpriteBatch spr)
             {
-                spr.Draw(trunk_texture,new Rectangle((int)(doodle.origin.X),(int)cart_y(doodle.origin.Y + doodle.size.Y - 10 - level_height),(int)trunk_size.X,(int)trunk_size.Y),
-                    null,Color.White,(heat > 0.0f ? (doodle.moving_right ? angle : angle + (float)Math.PI ) : 0.0f),(doodle.moving_right ? new Vector2(-15,trunk_size.Y/2) : new Vector2(trunk_size.X + 32, trunk_size.Y/2)),
-                    (doodle.moving_right ? SpriteEffects.None : SpriteEffects.FlipHorizontally),0);
+                spr.Draw(trunk_texture, new Rectangle((int)(doodle.origin.X), (int)cart_y(doodle.origin.Y + doodle.size.Y - 10 - level_height), (int)trunk_size.X, (int)trunk_size.Y),
+                    null, Color.White, (heat > 0.0f ? (doodle.moving_right ? angle : angle + (float)Math.PI) : 0.0f), (doodle.moving_right ? new Vector2(-15, trunk_size.Y / 2) : new Vector2(trunk_size.X + 32, trunk_size.Y / 2)),
+                    (doodle.moving_right ? SpriteEffects.None : SpriteEffects.FlipHorizontally), 0);
                 float x_offset = (heat > 0.0f ? vector_x(5, direction) - 4 : (doodle.moving_right ? 0 : -4));
                 float y_offset = (heat > 0.0f ? vector_y(5, direction) : 0);
                 spr.Draw(eyes_texture, new Rectangle((int)(doodle.origin.X + x_offset), (int)cart_y(doodle.origin.Y + doodle.size.Y - 10 - level_height + y_offset), (int)eyes_size.X, (int)eyes_size.Y),
@@ -642,7 +645,7 @@ namespace googlejump
             }
             public void draw(SpriteBatch spr)
             {
-                spr.Draw(ball_texture, drawing_boundary(), null, Color.White, rotation, new Vector2(ball_size.X/2,ball_size.Y/2), SpriteEffects.None, 0);
+                spr.Draw(ball_texture, drawing_boundary(), null, Color.White, rotation, new Vector2(ball_size.X / 2, ball_size.Y / 2), SpriteEffects.None, 0);
             }
         }
         // platform
@@ -662,15 +665,15 @@ namespace googlejump
             public void update()
             {
                 if (moving_right)
-                        origin.X += platform_speed;
-                    else
-                        origin.X -= platform_speed;
-                    if ((origin.X > screen_width - platform_size.X / 2 && moving_right) || (origin.X < platform_size.X / 2 && !moving_right))
-                        moving_right = (moving_right ? false : true);
+                    origin.X += platform_speed;
+                else
+                    origin.X -= platform_speed;
+                if ((origin.X > screen_width - platform_size.X / 2 && moving_right) || (origin.X < platform_size.X / 2 && !moving_right))
+                    moving_right = (moving_right ? false : true);
             }
             public void draw(SpriteBatch spr)
             {
-                spr.Draw((type == platform_type.BREAKABLE ? platform_breakable_texture : platform_normal_texture), drawing_boundary(), null, (type == platform_type.ONE_JUMP ? Color.LightBlue :  Color.White));
+                spr.Draw((type == platform_type.BREAKABLE ? platform_breakable_texture : platform_normal_texture), drawing_boundary(), null, (type == platform_type.ONE_JUMP ? Color.LightBlue : Color.White));
             }
         }
         // enemy
@@ -724,7 +727,7 @@ namespace googlejump
         public List<pltfrm> platform = new List<pltfrm>();
         public List<enmy> enemy = new List<enmy>();
         public List<bll> ball = new List<bll>();
-        
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -742,13 +745,13 @@ namespace googlejump
             screen_width = Window.ClientBounds.Width;
             screen_height = Window.ClientBounds.Height;
             height_per_score = 5.0f;
-            prb_per_height_platform_breakable = 1.0f / (0.05f * screen_height);
-            prb_per_height_platform_one_jump = 1.0f / (0.03f * screen_height);
-            prb_per_height_platform_moving = 1.0f / (0.01f * screen_height);
-            spc_per_height_platforms = 1.0f / (0.25f * screen_height);
-            prb_per_height_monster_normal = 1.0f / (2.0f * screen_height);
-            prb_per_height_monster_moving = 1.0f / (2.0f * screen_height);
-            prb_per_height_monster_huge = 1.0f / (5.0f * screen_height);
+            prb_per_height_platform_breakable = 1.0f / (0.025f * screen_height);
+            prb_per_height_platform_one_jump = 1.0f / (0.015f * screen_height);
+            prb_per_height_platform_moving = 1.0f / (0.005f * screen_height);
+            spc_per_height_platforms = 1.0f / (0.125f * screen_height);
+            prb_per_height_monster_normal = 1.0f / (1.0f * screen_height);
+            prb_per_height_monster_moving = 1.0f / (1.0f * screen_height);
+            prb_per_height_monster_huge = 1.0f / (2.5f * screen_height);
             crosshair.size.X = 32;
             crosshair.size.Y = 32;
             crosshair.just_clicked = false;
@@ -770,10 +773,10 @@ namespace googlejump
 
             // loading textures
             background_texture = Content.Load<Texture2D>("background");
-            menu_texture = Content.Load <Texture2D> ("menu");
-            options_texture = Content.Load <Texture2D> ("options");
+            menu_texture = Content.Load<Texture2D>("menu");
+            options_texture = Content.Load<Texture2D>("options");
             game_over_texture = Content.Load<Texture2D>("game_over");
-            pause_texture = Content.Load <Texture2D> ("pause");
+            pause_texture = Content.Load<Texture2D>("pause");
             doodle_texture = Content.Load<Texture2D>("doodle");
             trunk_texture = Content.Load<Texture2D>("trunk");
             eyes_texture = Content.Load<Texture2D>("eyes");
@@ -784,7 +787,7 @@ namespace googlejump
             ball_texture = Content.Load<Texture2D>("ball");
             huge_monster_texture = Content.Load<Texture2D>("huge_monster");
             normal_monster_texture = Content.Load<Texture2D>("normal_monster");
-            moving_monster_texture = Content.Load<Texture2D>("normal_monster");
+            moving_monster_texture = Content.Load<Texture2D>("moving_monster");
             spring_texture = Content.Load<Texture2D>("spring");
             jump_pad_texture = Content.Load<Texture2D>("jump_pad");
             block_layer = Content.Load<Texture2D>("block");
@@ -926,27 +929,30 @@ namespace googlejump
                     enemy = enemy_array.ToList();
 
                     bll[] ball_array = ball.ToArray();
-                    for (i = 0; i < ball.Count; i++ )
+                    for (i = 0; i < ball.Count; i++)
                     {
                         ball_array[i].update();
                     }
                     ball.Clear();
                     ball = ball_array.ToList();
 
-                    // move camera
+                    // move camera : level proceed
                     if (level_height < doodle.origin.Y - doodle_max_distance_from_below)
+                    {
                         level_height = doodle.origin.Y - doodle_max_distance_from_below;
+                        // update probabilities
+                        update_prb();
+                    }
                     // constructions
                     platform_constructor(ref platform, false);
 
                     enemy_constructor(ref enemy, ref platform);
 
-                    // update probabilities
-                    update_prb();
+
 
                     if (mouse_state.LeftButton == ButtonState.Pressed)
                         ball_constructor(ref ball);
-                    
+
                     // platform collision
                     for (i = 0; i < platform.Count; i++)
                     {
@@ -968,39 +974,42 @@ namespace googlejump
                         }
                     }
                     // enemy collision
-                    for (i = 0; i < enemy.Count; i++)
+                    if (!doodle.freezed)
                     {
-                        if (doodle.collision(enemy[i].boundary()))
+                        for (i = 0; i < enemy.Count; i++)
                         {
-                            doodle.freezed = true;
-                            if (doodle.velocity.Y < 0.0f)
-                                doodle.velocity.Y = 0.0f;
-                        }
-
-                        int enemy_removed_count = 0;
-                        for(int j = 0 ; j < ball.Count ; j++)
-                        {
-                            if (i < 0)
-                                i = 0;
-                            if (enemy.Count == 0)
-                                break;
-                            if (ball[j].collision(enemy[i].boundary()))
+                            if (doodle.collision(enemy[i].boundary()))
                             {
-                                enmy[] enemy_array2 = enemy.ToArray();
-                                enemy_array2[i].health--;
-                                enemy.Clear();
-                                enemy = enemy_array2.ToList();
-
-                                if (enemy[i].health <= 0)
-                                {
-                                    enemy.RemoveAt(i);
-                                    enemy_removed_count++;
-                                }
-                                ball.RemoveAt(j);
-                                j--;
+                                doodle.freezed = true;
+                                if (doodle.velocity.Y > 0.0f)
+                                    doodle.velocity.Y = 0.0f;
                             }
-                            i -= enemy_removed_count;
-                            enemy_removed_count = 0;
+
+                            int enemy_removed_count = 0;
+                            for (int j = 0; j < ball.Count; j++)
+                            {
+                                if (i < 0)
+                                    i = 0;
+                                if (enemy.Count == 0)
+                                    break;
+                                if (ball[j].collision(enemy[i].boundary()))
+                                {
+                                    enmy[] enemy_array2 = enemy.ToArray();
+                                    enemy_array2[i].health--;
+                                    enemy.Clear();
+                                    enemy = enemy_array2.ToList();
+
+                                    if (enemy[i].health <= 0)
+                                    {
+                                        enemy.RemoveAt(i);
+                                        enemy_removed_count++;
+                                    }
+                                    ball.RemoveAt(j);
+                                    j--;
+                                }
+                                i -= enemy_removed_count;
+                                enemy_removed_count = 0;
+                            }
                         }
                     }
 
@@ -1029,7 +1038,7 @@ namespace googlejump
                             options = true;
                     }
                 }
-                
+
                 // arrow controls
                 if (keyboard_state.IsKeyDown(Keys.Right) == keyboard_state.IsKeyDown(Keys.Left))
                 {
@@ -1050,7 +1059,7 @@ namespace googlejump
                     paused = (paused ? false : true);
                 }
             }
-            
+
             // end update
 
             // destroy
@@ -1075,7 +1084,7 @@ namespace googlejump
             {
                 spriteBatch.Draw(options_texture, new Rectangle(0, 0, screen_width, screen_height), Color.White);
                 if (set_sound)
-                    spriteBatch.Draw(tick_texture,new Rectangle(233-15/2,247-19/2,36/2,36/2),Color.White );
+                    spriteBatch.Draw(tick_texture, new Rectangle(233 - 15 / 2, 247 - 19 / 2, 36 / 2, 36 / 2), Color.White);
             }
             else if (menu)
             {

@@ -34,3 +34,4 @@ D:\Project\googlejump\googlejump\googlejump\bin\x86\Debug\Content\break_sound.xn
 D:\Project\googlejump\googlejump\googlejump\bin\x86\Debug\Content\game_over_sound.xnb
 D:\Project\googlejump\googlejump\googlejump\bin\x86\Debug\Content\jump_pad_sound.xnb
 D:\Project\googlejump\googlejump\googlejump\bin\x86\Debug\Content\spring_sound.xnb
+D:\Project\googlejump\googlejump\googlejump\bin\x86\Debug\Content\moving_monster.xnb
